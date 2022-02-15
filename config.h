@@ -1,3 +1,5 @@
+#ifndef CONFIG_H
+#define CONFIG_H
 #include <vector>
 #include <string>
 
@@ -85,3 +87,4 @@ class ConfigFile {
             return Str;
         }
 };
+#endif 

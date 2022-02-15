@@ -1,3 +1,4 @@
+//For comptle parser g++ parser.cpp /usr/local/lib/libyaml-cpp.a -o parser
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
@@ -45,7 +46,7 @@ int main() {
     }*/
     ConfigFile config_file;
     config_file=parseYAMLConfig(config);
-    std::cout<<config_file.get_processes()[0].get_cmd_arguments()[1]<<std::endl;
+    std::cout<<config_file.get_processes()[0].get_cmd_arguments()[0]<<std::endl;
     std::ofstream fout("parsed_config.txt");
     fout << config_file;
 }
