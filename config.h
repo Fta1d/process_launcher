@@ -2,6 +2,8 @@
 #define CONFIG_H
 #include <vector>
 #include <string>
+#include <yaml-cpp/yaml.h>
+#include <iostream>
 
 class CmdArgument {
 public:
@@ -14,12 +16,7 @@ private:
 public:
     const std::string& get_option_name() const;
     void set_option_name(const std::string& value);
-    friend std::ostream& operator<<(std::ostream& Str, CmdArgument const& v)
-    {
-        Str << "cmd_argument{" << std::endl
-            << v.option_name << "}" << std::endl;
-        return Str;
-    }
+    friend std::ostream& operator<<(std::ostream& Str, CmdArgument const& v);
 };
 
 class StdoutConfig {
@@ -36,13 +33,7 @@ public:
     void set_file(const std::string& value);
     const std::string& get_mode() const;
     void set_mode(const std::string& value);
-    friend std::ostream& operator<<(std::ostream& Str, StdoutConfig const& v)
-    {
-        Str << "stdout_config:{" << std::endl
-            << v.file << std::endl
-            << v.mode << "}" << std::endl;
-        return Str;
-    }
+    friend std::ostream& operator<<(std::ostream& Str, StdoutConfig const& v);    
 };
 
 class Process {
@@ -65,17 +56,7 @@ public:
     void set_stdout_config(const StdoutConfig& value);
     const std::vector<CmdArgument>& get_cmd_arguments() const;
     void set_cmd_arguments(const std::vector<CmdArgument>& value);
-    friend std::ostream& operator<<(std::ostream& Str, Process const& v)
-    {
-        Str << "Process{" << std::endl
-            << v.name << std::endl
-            << v.executable_path << std::endl
-            << v.stdout_config << std::endl;
-        for (CmdArgument i : v.cmd_arguments)
-            Str << i << std::endl;
-        Str << "}" << std::endl;
-        return Str;
-    }
+    friend std::ostream& operator<<(std::ostream& Str, Process const& v);    
 };
 
 class ConfigFile {
@@ -85,17 +66,17 @@ public:
 
 private:
     std::vector<Process> processes;
+    YAML::Node config_file; 
+    std::string yaml_file_name="config.yaml";
 
 public:
     const std::vector<Process>& get_processes() const;
     void set_processes(const std::vector<Process>& value);
-    friend std::ostream& operator<<(std::ostream& Str, ConfigFile const& v)
-    {
-        Str << "ConfigFile{" << std::endl;
-        for (Process i : v.processes)
-            Str << i << std::endl;
-        Str << "}" << std::endl;
-        return Str;
-    }
+    friend std::ostream& operator<<(std::ostream& Str, ConfigFile const& v);
+    
+    const Process getOneProcess( int process_id);
+    const std::vector <Process> getAllProcesses();
+    const std::vector <CmdArgument> getProcessArguments( Process process );
+    const StdoutConfig getProcessStdout( Process process);
 };
 #endif
