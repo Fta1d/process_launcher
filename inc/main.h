@@ -67,4 +67,3 @@ public:
 #endif //PROCESS_LAUNCHER_MAIN_H
 
 
-#endif //PROCESS_LAUNCHER_MAIN_H
